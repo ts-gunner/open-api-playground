@@ -1,5 +1,4 @@
 declare namespace API {
- 
   type addRoleParams = {
     role: string;
   };
@@ -134,6 +133,7 @@ declare namespace API {
     userName?: string;
     userAvatar?: string;
     userProfile?: string;
+    roles?: string[];
     createTime?: string;
     updateTime?: string;
   };
