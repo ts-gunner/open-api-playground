@@ -1,4 +1,3 @@
-import { addRule, removeRule, rule, updateRule } from '@/services/ant-design-pro/api';
 import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns, ProDescriptionsItemProps } from '@ant-design/pro-components';
 import {
@@ -13,17 +12,11 @@ import {
     ProForm
 } from '@ant-design/pro-components';
 import '@umijs/max';
-import { Button, Drawer, Input, message } from 'antd';
+import { Button, Drawer, message, Tag, Popconfirm } from 'antd';
 import React, { useRef, useState } from 'react';
-import type { FormValueType } from './components/UpdateForm';
 import UpdateForm from './components/UpdateForm';
-import { addInterfaceInfo, queryInterfaceInfo } from '@/services/forty-controller/interfaceInfoController';
+import { addInterfaceInfo, deleteInterface, queryInterfaceInfo, updateInterfaceInfo } from '@/services/forty-controller/interfaceInfoController';
 
-/**
- * @en-US Add node
- * @zh-CN 添加节点
- * @param fields
- */
 
 const requireRules = [
     {
@@ -32,52 +25,6 @@ const requireRules = [
     },
 ]
 
-/**
- * @en-US Update node
- * @zh-CN 更新节点
- *
- * @param fields
- */
-const handleUpdate = async (fields: FormValueType) => {
-    const hide = message.loading('Configuring');
-    try {
-        await updateRule({
-            name: fields.name,
-            desc: fields.description,
-            key: fields.id,
-        });
-        hide();
-        message.success('Configuration is successful');
-        return true;
-    } catch (error) {
-        hide();
-        message.error('Configuration failed, please try again!');
-        return false;
-    }
-};
-
-/**
- *  Delete node
- * @zh-CN 删除节点
- *
- * @param selectedRows
- */
-const handleRemove = async (selectedRows: API.InterfaceInfoVO[]) => {
-    const hide = message.loading('正在删除');
-    if (!selectedRows) return true;
-    try {
-        await removeRule({
-            key: selectedRows.map((row) => row.id),
-        });
-        hide();
-        message.success('Deleted successfully and will refresh soon');
-        return true;
-    } catch (error) {
-        hide();
-        message.error('Delete failed, please try again');
-        return false;
-    }
-};
 
 const InterfaceManage: React.FC = () => {
     const [createModalOpen, handleModalOpen] = useState<boolean>(false);
@@ -91,12 +38,15 @@ const InterfaceManage: React.FC = () => {
     const [currentRow, setCurrentRow] = useState<API.InterfaceInfoVO>();
     const [selectedRowsState, setSelectedRows] = useState<API.InterfaceInfoVO[]>([]);
 
-    /**
-     * @en-US International configuration
-     * @zh-CN 国际化配置
-     * */
-
     const columns: ProColumns<API.InterfaceInfoVO>[] = [
+        {
+            title: 'id',
+            dataIndex: 'id',
+            hideInSearch: true,
+            hideInTable: true,
+            hideInDescriptions: true,
+        },
+
         {
             title: '接口名称',
             dataIndex: 'name',
@@ -119,10 +69,13 @@ const InterfaceManage: React.FC = () => {
             dataIndex: 'description',
             valueType: 'textarea',
             align: "center",
+            hideInSearch: true
         },
         {
             title: '接口地址',
             dataIndex: 'url',
+            align: "center",
+            hideInSearch: true,
         },
         {
             title: '请求方法',
@@ -133,16 +86,14 @@ const InterfaceManage: React.FC = () => {
             title: '接口状态',
             dataIndex: 'status',
             align: "center",
-            hideInForm: true,
+            valueType: "select",
             valueEnum: {
-                0: {
-                    text: '关闭',
-                    status: 'Default',
+                true: {
+                    text: <Tag color="#87d068">open</Tag>
                 },
-                1: {
-                    text: '开启',
-                    status: 'Success',
-                },
+                false: {
+                    text: <Tag color="#cd201f">close</Tag>
+                }
             },
         },
         {
@@ -151,29 +102,76 @@ const InterfaceManage: React.FC = () => {
             align: "center",
         },
         {
+            title: '创建时间',
+            dataIndex: 'createTime',
+            align: "center",
+        },
+        {
             title: '操作',
             dataIndex: 'option',
             valueType: 'option',
             align: "center",
             render: (_, record) => [
-                <a
-                    key="config"
-                    onClick={() => {
-                        handleUpdateModalOpen(true);
-                        setCurrentRow(record);
-                    }}
-                >
-                    配置
-                </a>,
-                <a key="subscribeAlert" href="https://procomponents.ant.design/">
-                    订阅警报
-                </a>,
+                <>
+                    <a
+                        key="config"
+                        onClick={() => {
+                            setCurrentRow(record);
+                            handleUpdateModalOpen(true);
+                        }}
+                    >
+                        配置
+                    </a>
+                    <Popconfirm
+                        title="Delete the task"
+                        description="你确定要删除吗?"
+                        okText="Yes"
+                        cancelText="No"
+                        onConfirm={async () => {
+                            const response = await deleteInterface({
+                                interfaceId: record.id || 0
+                            })
+                            if (response.code === 200 && response?.data) {
+                                message.success("删除成功！")
+                                actionRef?.current?.reload();
+                            } else {
+                                message.error("删除失败")
+                            }
+                        }}
+                    >
+                        <a key="config">删除</a>
+                    </Popconfirm>
+                </>
             ],
+        },
+        {
+            title: '请求头',
+            dataIndex: 'requestHeader',
+            hideInSearch: true,
+            hideInTable: true,
+        },
+        {
+            title: '请求主体',
+            dataIndex: 'requestBody',
+            hideInSearch: true,
+            hideInTable: true,
+        },
+        {
+            title: '响应头',
+            dataIndex: 'responseHeader',
+            hideInSearch: true,
+            hideInTable: true,
+        },
+        {
+            title: '响应主体',
+            dataIndex: 'responseBody',
+            hideInSearch: true,
+            hideInTable: true,
         },
     ];
     return (
         <PageContainer>
-            <ProTable<API.InterfaceInfoVO, API.PageParams>
+            <ProTable<API.InterfaceInfoVO, API.InterfacePageParams>
                 headerTitle={'查询表格'}
                 actionRef={actionRef}
                 rowKey="id"
@@ -191,14 +189,14 @@ const InterfaceManage: React.FC = () => {
                         <PlusOutlined /> 新建
                     </Button>,
                 ]}
-                request={async (
-                    params,
-                    sort,
-                    filter,
-                ) => {
+                request={async (params) => {
                     const response = await queryInterfaceInfo({
                         currentPage: params.current,
                         pageSize: params.pageSize,
+                        interfaceName: params.name,
+                        method: params.method,
+                        userAccount: params.userAccount,
+                        status: params.status !== undefined ? params.status === "true" : undefined
                     })
                     return {
                         data: response.data?.records,
@@ -229,21 +227,9 @@ const InterfaceManage: React.FC = () => {
                                 {selectedRowsState.length}
                             </a>{' '}
                             项 &nbsp;&nbsp;
-                            <span>
-                                服务调用次数总计 {selectedRowsState.reduce((pre, item) => pre + 1, 0)} 万
-                            </span>
                         </div>
                     }
                 >
-                    <Button
-                        onClick={async () => {
-                            await handleRemove(selectedRowsState);
-                            setSelectedRows([]);
-                            actionRef.current?.reloadAndRest?.();
-                        }}
-                    >
-                        批量删除
-                    </Button>
                     <Button type="primary">批量审批</Button>
                 </FooterToolbar>
             )}
@@ -324,8 +310,8 @@ const InterfaceManage: React.FC = () => {
             </ModalForm>
             <UpdateForm
                 onSubmit={async (value) => {
-                    const success = await handleUpdate(value);
-                    if (success) {
+                    const response = await updateInterfaceInfo(value)
+                    if (response.code === 200) {
                         handleUpdateModalOpen(false);
                         setCurrentRow(undefined);
                         if (actionRef.current) {
@@ -333,12 +319,7 @@ const InterfaceManage: React.FC = () => {
                         }
                     }
                 }}
-                onCancel={() => {
-                    handleUpdateModalOpen(false);
-                    if (!showDetail) {
-                        setCurrentRow(undefined);
-                    }
-                }}
+                onOpenChange={handleUpdateModalOpen}
                 updateModalOpen={updateModalOpen}
                 values={currentRow || {}}
             />

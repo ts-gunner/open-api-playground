@@ -5,26 +5,39 @@ import React from 'react';
 const Footer: React.FC = () => {
   return (
     <DefaultFooter
+      copyright="@2024 0.0.1 接口管理平台"
       style={{
         background: 'none',
       }}
       links={[
         {
-          key: 'Ant Design Pro',
-          title: 'Ant Design Pro',
-          href: 'https://pro.ant.design',
+          key: 'Open API Center',
+          title: 'Open API Center',
+          href: 'https://github.com/ts-gunner/open-api-center',
           blankTarget: true,
         },
         {
           key: 'github',
           title: <GithubOutlined />,
-          href: 'https://github.com/ant-design/ant-design-pro',
+          href: '#',
           blankTarget: true,
         },
         {
-          key: 'Ant Design',
-          title: 'Ant Design',
-          href: 'https://ant.design',
+          key: 'Open API Controller',
+          title: 'Open API Controller',
+          href: 'https://github.com/ts-gunner/open-api-controller',
+          blankTarget: true,
+        },
+        {
+          key: 'a',
+          title: '|',
+          href: '#',
+          blankTarget: false,
+        },
+        {
+          key: 'Open API Playground',
+          title: 'Open API Playground',
+          href: 'https://github.com/ts-gunner/open-api-playground',
           blankTarget: true,
         },
       ]}

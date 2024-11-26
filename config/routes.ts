@@ -1,3 +1,5 @@
+import access from "@/access";
+
 export default [
   {
     path: '/user',
@@ -7,15 +9,17 @@ export default [
   { path: '/welcome', name: '欢迎', icon: 'smile', component: './Welcome' },
   {
     path: '/admin',
-    name: '管理页',
+    name: '安全管理',
     icon: 'crown',
     access: 'canAdmin',
     routes: [
       { path: '/admin', redirect: '/admin/sub-page' },
-      { path: '/admin/sub-page', name: '二级管理页', component: './Admin' },
+      { path: '/admin/sub-page', name: '管理介绍', component: './Admin', },
+      { path: '/admin/user/manage', name: '用户管理', component: './UserManage' },
+      { path: '/admin/interface/manage', name: '接口管理', icon: 'api', component: './InterfaceManage'},
+
     ],
   },
-  { name: '接口管理', icon: 'api', path: '/interface/manage', component: './InterfaceManage' },
   { name: '表格', icon: 'table', path: '/list', component: './TableList' },
   { path: '/', redirect: '/welcome' },
   { path: '*', layout: false, component: './404' },

@@ -93,7 +93,7 @@ declare namespace API {
     interfaceName?: string;
     method?: string;
     userAccount?: string;
-    apistatus?: boolean;
+    status?: boolean;
   };
 
   type InterfaceInfoUpdateRequest = {

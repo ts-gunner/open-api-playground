@@ -34,6 +34,15 @@ declare namespace API {
     pageSize?: number;
   };
 
+  type InterfacePageParams = {
+    current?: number;
+    pageSize?: number;
+    name?: string;
+    method?: string,
+    userAccount?: string,
+    status?: string;
+  }
+
   type RuleListItem = {
     key?: number;
     disabled?: boolean;

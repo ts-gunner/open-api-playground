@@ -1,6 +1,6 @@
 import { Footer } from '@/components';
 import { getFakeCaptcha } from '@/services/ant-design-pro/login';
-import { userLogin } from '@/services/forty-controller/userController';
+import { getUserInfo, userLogin } from '@/services/forty-controller/userController';
 import {
   AlipayCircleOutlined,
   LockOutlined,
@@ -84,20 +84,9 @@ const LoginMessage: React.FC<{
 const Login: React.FC = () => {
   const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
   const [type, setType] = useState<string>('account');
-  const { initialState, setInitialState } = useModel('@@initialState');
+  const { initialState, setInitialState, refresh } = useModel('@@initialState');
   const { styles } = useStyles();
-  const fetchUserInfo = async () => {
-    const userInfo = await initialState?.loginUser;
-    console.log('userinfo', initialState);
-    if (userInfo) {
-      flushSync(() => {
-        setInitialState((s) => ({
-          ...s,
-          loginUser: userInfo,
-        }));
-      });
-    }
-  };
+
   const handleSubmit = async (values: API.UserLoginRequest) => {
     try {
       // 登录
@@ -108,9 +97,18 @@ const Login: React.FC = () => {
         const defaultLoginSuccessMessage = '登录成功！';
         sessionStorage.setItem('token', response.data || '');
         message.success(defaultLoginSuccessMessage);
-        await fetchUserInfo();
+        let userResponse = await getUserInfo();
+        await setInitialState((initState?:InitialState) => {
+          let newState = {
+            ...initState,
+            loginUser: userResponse.data
+          }
+          return newState
+        })
+        await refresh()
         const urlParams = new URL(window.location.href).searchParams;
         history.push(urlParams.get('redirect') || '/');
+        
         return;
       } else {
         message.error(response.msg);
