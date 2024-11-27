@@ -14,6 +14,12 @@ declare namespace API {
     data?: number;
   };
 
+  type BaseResponseListUserRoleVO = {
+    code?: number;
+    msg?: string;
+    data?: UserRoleVO[];
+  };
+
   type BaseResponseLoginUserVO = {
     code?: number;
     msg?: string;
@@ -100,13 +106,13 @@ declare namespace API {
     interfaceId?: number;
     interfaceName?: string;
     interfaceDescription?: string;
+    status?: boolean;
     method?: string;
     url?: string;
     requestHeader?: string;
     responseHeader?: string;
     requestBody?: string;
     responseBody?: string;
-    apistatus?: boolean;
   };
 
   type InterfaceInfoVO = {
@@ -261,15 +267,21 @@ declare namespace API {
     updateTime?: string;
   };
 
+  type UserUpdateRequest = {
+    id?: number;
+    userName?: string;
+    userProfile?: string;
+  };
+
   type UserVO = {
     id?: number;
     userAccount?: string;
-    password?: string;
     unionId?: string;
     mpOpenId?: string;
     userName?: string;
     userAvatar?: string;
     userProfile?: string;
+    roles?: string[];
     createTime?: string;
     updateTime?: string;
   };

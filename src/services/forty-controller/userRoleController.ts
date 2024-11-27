@@ -32,9 +32,27 @@ export async function deleteRole(
   });
 }
 
-/** 此处后端没有提供注释 POST /role/getRole */
-export async function getRole(body: API.UserRoleQueryRequest, options?: { [key: string]: any }) {
-  return request<API.BaseResponsePageUserRoleVO>('/role/getRole', {
+/** 此处后端没有提供注释 POST /role/getRoleByPage */
+export async function getRoleByPage(
+  body: API.UserRoleQueryRequest,
+  options?: { [key: string]: any },
+) {
+  return request<API.BaseResponsePageUserRoleVO>('/role/getRoleByPage', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** 此处后端没有提供注释 POST /role/getRoleList */
+export async function getRoleList(
+  body: API.UserRoleQueryRequest,
+  options?: { [key: string]: any },
+) {
+  return request<API.BaseResponseListUserRoleVO>('/role/getRoleList', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

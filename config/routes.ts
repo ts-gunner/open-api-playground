@@ -16,8 +16,8 @@ export default [
       { path: '/admin', redirect: '/admin/sub-page' },
       { path: '/admin/sub-page', name: '管理介绍', component: './Admin', },
       { path: '/admin/user/manage', name: '用户管理', component: './UserManage' },
-      { path: '/admin/interface/manage', name: '接口管理', icon: 'api', component: './InterfaceManage'},
-
+      { path: '/admin/interface/manage', name: '接口管理', component: './InterfaceManage' },
+      { path: '/admin/role/manage', name: '角色管理', component: './RoleManage' },
     ],
   },
   { name: '表格', icon: 'table', path: '/list', component: './TableList' },

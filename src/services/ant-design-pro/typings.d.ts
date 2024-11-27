@@ -42,6 +42,14 @@ declare namespace API {
     userAccount?: string,
     status?: string;
   }
+  type UserPageParams = {
+    current?: number;
+    pageSize?: number;
+    userName?: string;
+    userAccount?: string,
+    status?: string;
+  }
+
 
   type RuleListItem = {
     key?: number;

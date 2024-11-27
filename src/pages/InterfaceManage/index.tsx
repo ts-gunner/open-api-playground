@@ -109,40 +109,38 @@ const InterfaceManage: React.FC = () => {
         {
             title: '操作',
             dataIndex: 'option',
-            valueType: 'option',
+            valueType: "option",
             align: "center",
             render: (_, record) => [
-                <>
-                    <a
-                        key="config"
-                        onClick={() => {
-                            setCurrentRow(record);
-                            handleUpdateModalOpen(true);
-                        }}
-                    >
-                        配置
-                    </a>
-                    <Popconfirm
-                        title="Delete the task"
-                        description="你确定要删除吗?"
-                        okText="Yes"
-                        cancelText="No"
-                        onConfirm={async () => {
-                            const response = await deleteInterface({
-                                interfaceId: record.id || 0
-                            })
-                            if (response.code === 200 && response?.data) {
-                                message.success("删除成功！")
-                                actionRef?.current?.reload();
-                            } else {
-                                message.error("删除失败")
-                            }
-                        }}
-                    >
-                        <a key="config">删除</a>
-                    </Popconfirm>
-                </>
-            ],
+                (<a
+                    key="config"
+                    onClick={() => {
+                        setCurrentRow(record);
+                        handleUpdateModalOpen(true);
+                    }}
+                >
+                    配置
+                </a>),
+                (<Popconfirm
+                    title="Delete the task"
+                    description="你确定要删除吗?"
+                    okText="Yes"
+                    cancelText="No"
+                    onConfirm={async () => {
+                        const response = await deleteInterface({
+                            interfaceId: record.id || 0
+                        })
+                        if (response.code === 200 && response?.data) {
+                            message.success("删除成功！")
+                            actionRef?.current?.reload();
+                        } else {
+                            message.error("删除失败")
+                        }
+                    }}
+                >
+                    <a key="config">删除</a>
+                </Popconfirm>)
+            ]
         },
         {
             title: '请求头',
