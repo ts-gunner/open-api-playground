@@ -142,6 +142,7 @@ declare namespace API {
     roles?: string[];
     createTime?: string;
     updateTime?: string;
+    secretId?: string;
   };
 
   type OrderItem = {
@@ -279,6 +280,7 @@ declare namespace API {
     unionId?: string;
     mpOpenId?: string;
     userName?: string;
+    secretId?: string;
     userAvatar?: string;
     userProfile?: string;
     roles?: string[];

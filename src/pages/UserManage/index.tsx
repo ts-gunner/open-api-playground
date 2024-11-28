@@ -103,6 +103,14 @@ const UserManage: React.FC = () => {
       }
     },
     {
+      title: '密钥ID',
+      dataIndex: 'secretId',
+      align: "center",
+      hideInForm: true,
+      hideInSearch: true,
+      hideInTable: true,
+    },
+    {
       title: '自我介绍',
       dataIndex: 'userProfile',
       align: "center",

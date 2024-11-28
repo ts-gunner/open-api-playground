@@ -14,6 +14,14 @@ export async function addUser(body: API.UserAddRequest, options?: { [key: string
   });
 }
 
+/** 此处后端没有提供注释 GET /user/create_user_secret */
+export async function createUserSecret(options?: { [key: string]: any }) {
+  return request<API.BaseResponseString>('/user/create_user_secret', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
 /** 删除用户 GET /user/delete/user_info */
 export async function deleteUser(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)

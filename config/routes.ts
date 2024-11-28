@@ -21,6 +21,7 @@ export default [
     ],
   },
   { name: '表格', icon: 'table', path: '/list', component: './TableList' },
+  { name: '用户中心', icon: 'user', path: '/user/center', component: './UserCenter' },
   { path: '/', redirect: '/welcome' },
   { path: '*', layout: false, component: './404' },
 ];
