@@ -1,10 +1,11 @@
 import access from "@/access";
+import component from "@/locales/en-US/component";
 
 export default [
   {
     path: '/user',
     layout: false,
-    routes: [{ name: '登录', path: '/user/login', component: './User/Login' }],
+    routes: [{ name: '登录', path: '/user/login', component: './Login' }],
   },
   { path: '/welcome', name: '欢迎', icon: 'smile', component: './Welcome' },
   {
@@ -13,15 +14,16 @@ export default [
     icon: 'crown',
     access: 'canAdmin',
     routes: [
-      { path: '/admin', redirect: '/admin/sub-page' },
-      { path: '/admin/sub-page', name: '管理介绍', component: './Admin', },
+      { path: '/admin', redirect: '/admin/user/manage' },
       { path: '/admin/user/manage', name: '用户管理', component: './UserManage' },
       { path: '/admin/interface/manage', name: '接口管理', component: './InterfaceManage' },
       { path: '/admin/role/manage', name: '角色管理', component: './RoleManage' },
     ],
   },
-  { name: '表格', icon: 'table', path: '/list', component: './TableList' },
+  { name: '开放API文档', icon: 'api', path: '/interface/docs', component: './InterfaceDocs' },
   { name: '用户中心', icon: 'user', path: '/user/center', component: './UserCenter' },
+  { name: "查看接口文档", path: "/interface/detail/:interfaceId", component: "./InterfaceDetail", hideInMenu: true},
+  { name: "在线调用接口", path: "/interface/online/:interfaceId", component: "./InterfaceOnline", hideInMenu: true},
   { path: '/', redirect: '/welcome' },
   { path: '*', layout: false, component: './404' },
 ];

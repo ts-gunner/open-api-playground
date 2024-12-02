@@ -168,7 +168,7 @@ const UserManage: React.FC = () => {
               message.success("删除成功！")
               actionRef?.current?.reload();
             } else {
-              message.error("删除失败")
+              message.error("删除失败:" + response.msg)
             }
           }}
         >
@@ -330,7 +330,7 @@ const UserManage: React.FC = () => {
       >
         {currentRow?.userAccount && (
           <ProDescriptions<API.UserVO>
-            column={2}
+            column={1}
             title={currentRow?.userAccount}
             request={async () => ({
               data: currentRow || {},

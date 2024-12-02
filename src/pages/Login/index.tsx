@@ -19,7 +19,7 @@ import { Helmet, history, useModel } from '@umijs/max';
 import { Alert, message, Tabs } from 'antd';
 import { createStyles } from 'antd-style';
 import React, { useState } from 'react';
-import Settings from '../../../../config/defaultSettings';
+import Settings from '../../../config/defaultSettings';
 const useStyles = createStyles(({ token }) => {
   return {
     action: {
@@ -122,7 +122,7 @@ const Login: React.FC = () => {
     <div className={styles.container}>
       <Helmet>
         <title>
-          {'登录'}- {Settings.title}
+          {'登录'} - {Settings.title}
         </title>
       </Helmet>
       <div
@@ -136,9 +136,9 @@ const Login: React.FC = () => {
             minWidth: 280,
             maxWidth: '75vw',
           }}
-          logo={<img alt="logo" src="/logo.svg" />}
-          title="Ant Design"
-          subTitle={'Ant Design 是西湖区最具影响力的 Web 设计规范'}
+          logo={<img alt="logo" src="https://pic.imgdb.cn/item/66f584d4f21886ccc033d91a.png" />}
+          title="API Controller"
+          subTitle={'提供用户开放API的简易平台'}
           initialValues={{
             autoLogin: true,
           }}

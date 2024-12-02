@@ -32,6 +32,36 @@ export async function deleteInterface(
   });
 }
 
+/** 此处后端没有提供注释 GET /openapi/offline */
+export async function demiseInterface(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.demiseInterfaceParams,
+  options?: { [key: string]: any },
+) {
+  return request<API.BaseResponseInteger>('/openapi/offline', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
+/** 此处后端没有提供注释 GET /openapi/online */
+export async function publishInterface(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.publishInterfaceParams,
+  options?: { [key: string]: any },
+) {
+  return request<API.BaseResponseInteger>('/openapi/online', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
 /** 此处后端没有提供注释 POST /openapi/query */
 export async function queryInterfaceInfo(
   body: API.InterfaceInfoQueryRequest,

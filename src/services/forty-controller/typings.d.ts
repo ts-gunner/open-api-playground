@@ -80,6 +80,10 @@ declare namespace API {
     userId: number;
   };
 
+  type demiseInterfaceParams = {
+    interfaceId: number;
+  };
+
   type InterfaceInfoAddRequest = {
     interfaceName?: string;
     description?: string;
@@ -96,6 +100,7 @@ declare namespace API {
     pageSize?: number;
     sortField?: string;
     sortOrder?: string;
+    interfaceId?: number;
     interfaceName?: string;
     method?: string;
     userAccount?: string;
@@ -204,6 +209,10 @@ declare namespace API {
     maxLimit?: number;
     countId?: string;
     pages?: number;
+  };
+
+  type publishInterfaceParams = {
+    interfaceId: number;
   };
 
   type RoleAssignmentQueryRequest = {

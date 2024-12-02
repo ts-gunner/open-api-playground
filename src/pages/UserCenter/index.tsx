@@ -26,7 +26,7 @@ export default function UserCenter() {
             // 2. 打开modal，
             handleCreateKeyOpen(true)
         } else {
-            message.error(response.msg) 
+            message.error(response.msg)
         }
 
     }
@@ -35,8 +35,10 @@ export default function UserCenter() {
             <ProCard
                 title="用户基本信息"
                 bordered
+                boxShadow
             >
                 <ProDescriptions
+                    column={2}
                     actionRef={actionRef}
                     request={async () => {
                         return Promise.resolve({
@@ -51,7 +53,6 @@ export default function UserCenter() {
                             actionRef.current?.reload()
                         }} />
                     </ProDescriptions.Item>
-                    <ProDescriptions.Item dataIndex="id" label="用户id"></ProDescriptions.Item>
                     <ProDescriptions.Item dataIndex="userAccount" label="用户账号"></ProDescriptions.Item>
                     <ProDescriptions.Item dataIndex="secretId" label="密钥ID" copyable></ProDescriptions.Item>
                     <ProDescriptions.Item dataIndex="userProfile" label="用户介绍" copyable></ProDescriptions.Item>
@@ -64,6 +65,7 @@ export default function UserCenter() {
                 title="密钥管理"
                 tooltip="创建密钥后，需要自己保管密钥，不能查看密钥，只能重新生成新的密钥"
                 bordered
+                boxShadow
                 style={{
                     marginTop: "20px"
                 }}
@@ -98,7 +100,7 @@ export default function UserCenter() {
                 submitter={{
                     submitButtonProps: {
                         style: {
-                            display:"none"
+                            display: "none"
                         }
                     },
                     resetButtonProps: {

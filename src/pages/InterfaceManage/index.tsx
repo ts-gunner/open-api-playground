@@ -12,10 +12,10 @@ import {
     ProForm
 } from '@ant-design/pro-components';
 import '@umijs/max';
-import { Button, Drawer, message, Tag, Popconfirm } from 'antd';
+import { Button, Drawer, message, Tag, Popconfirm, Typography } from 'antd';
 import React, { useRef, useState } from 'react';
 import UpdateForm from './components/UpdateForm';
-import { addInterfaceInfo, deleteInterface, queryInterfaceInfo, updateInterfaceInfo } from '@/services/forty-controller/interfaceInfoController';
+import { addInterfaceInfo, deleteInterface, demiseInterface, publishInterface, queryInterfaceInfo, updateInterfaceInfo } from '@/services/forty-controller/interfaceInfoController';
 
 
 const requireRules = [
@@ -121,6 +121,42 @@ const InterfaceManage: React.FC = () => {
                 >
                     配置
                 </a>),
+                (record.status ? (
+                    <Typography
+                        style={{
+                            color: '#cd201f'
+                        }}
+                        onClick={async () => {
+                            const response = await demiseInterface({
+                                interfaceId: record.id || 0
+                            });
+                            if (response.code === 200) {
+                                message.success(response.msg || "成功！！")
+                                actionRef.current?.reload()
+                            }
+                            else {
+                                message.error(response.msg)
+                            }
+                        }}
+                    >下架</Typography>
+                ) : <Typography
+                    style={{
+                        color: 'green'
+                    }}
+                    onClick={async () => {
+                        const response = await publishInterface({
+                            interfaceId: record.id || 0
+                        });
+                        if (response.code === 200) {
+                            message.success(response.msg || "成功！！")
+                            actionRef.current?.reload()
+                        }
+                        else {
+                            message.error(response.msg)
+                        }
+                    }}
+                >发布</Typography>),
+
                 (<Popconfirm
                     title="Delete the task"
                     description="你确定要删除吗?"
@@ -284,37 +320,25 @@ const InterfaceManage: React.FC = () => {
                     />
                 </ProForm.Group>
 
-                <ProForm.Group>
-                    <ProFormTextArea
-                        label="请求头"
-                        width="md" name="requestHeader"
-                    />
-                    <ProFormTextArea
-                        label="响应头"
-                        width="md" name="responseHeader"
-                    />
-                    <ProFormTextArea
-                        label="请求体"
-                        width="md" name="requestBody"
-                    />
-                    <ProFormTextArea
-                        label="响应体"
-                        width="md" name="responseBody"
-                    />
-
-                </ProForm.Group>
-
-
             </ModalForm>
             <UpdateForm
                 onSubmit={async (value) => {
-                    const response = await updateInterfaceInfo(value)
+                    console.log("@@#", value)
+                    const response = await updateInterfaceInfo({
+                        ...value,
+                        requestHeader: JSON.stringify(value.requestHeader),
+                        requestBody: JSON.stringify(value.requestBody),
+                        responseHeader: JSON.stringify(value.responseHeader),
+                        responseBody: JSON.stringify(value.responseBody),
+                    })
                     if (response.code === 200) {
                         handleUpdateModalOpen(false);
                         setCurrentRow(undefined);
                         if (actionRef.current) {
                             actionRef.current.reload();
                         }
+                    }else {
+                        message.error("更新失败：" + response.msg)
                     }
                 }}
                 onOpenChange={handleUpdateModalOpen}
@@ -333,7 +357,7 @@ const InterfaceManage: React.FC = () => {
             >
                 {currentRow?.name && (
                     <ProDescriptions<API.InterfaceInfoVO>
-                        column={2}
+                        column={1}
                         title={currentRow?.name}
                         request={async () => ({
                             data: currentRow || {},
