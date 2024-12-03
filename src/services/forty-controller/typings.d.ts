@@ -95,6 +95,13 @@ declare namespace API {
     responseBody?: string;
   };
 
+  type InterfaceInfoInvokeRequest = {
+    interfaceId?: string;
+    bodyType?: string;
+    userRequestHeader?: string;
+    userRequestParams?: string;
+  };
+
   type InterfaceInfoQueryRequest = {
     currentPage?: number;
     pageSize?: number;
