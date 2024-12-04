@@ -1,5 +1,3 @@
-import access from "@/access";
-import component from "@/locales/en-US/component";
 
 export default [
   {
@@ -20,7 +18,7 @@ export default [
       { path: '/admin/role/manage', name: '角色管理', component: './RoleManage' },
     ],
   },
-  { name: '开放API文档', icon: 'api', path: '/interface/docs', component: './InterfaceDocs' },
+  { name: 'API目录', icon: 'api', path: '/interface/docs', component: './InterfaceDocs' },
   { name: '用户中心', icon: 'user', path: '/user/center', component: './UserCenter' },
   { name: "查看接口文档", path: "/interface/detail/:interfaceId", component: "./InterfaceDetail", hideInMenu: true},
   { name: "在线调用接口", path: "/interface/online/:interfaceId", component: "./InterfaceOnline", hideInMenu: true},

@@ -92,6 +92,21 @@ export async function queryInterfaceInfo(
   });
 }
 
+/** 此处后端没有提供注释 POST /openapi/queryAll */
+export async function queryAllInterfaceInfo(
+  body: API.InterfaceInfoQueryRequest,
+  options?: { [key: string]: any },
+) {
+  return request<API.BaseResponseListInterfaceInfoVO>('/openapi/queryAll', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
 /** 此处后端没有提供注释 POST /openapi/update */
 export async function updateInterfaceInfo(
   body: API.InterfaceInfoUpdateRequest,

@@ -8,10 +8,22 @@ declare namespace API {
     userId?: number;
   };
 
+  type BaseResponseBoolean = {
+    code?: number;
+    msg?: string;
+    data?: boolean;
+  };
+
   type BaseResponseInteger = {
     code?: number;
     msg?: string;
     data?: number;
+  };
+
+  type BaseResponseListInterfaceInfoVO = {
+    code?: number;
+    msg?: string;
+    data?: InterfaceInfoVO[];
   };
 
   type BaseResponseListUserRoleVO = {
@@ -50,6 +62,12 @@ declare namespace API {
     data?: PageRoleAssignmentVO;
   };
 
+  type BaseResponsePageUserInterfaceVO = {
+    code?: number;
+    msg?: string;
+    data?: PageUserInterfaceVO;
+  };
+
   type BaseResponsePageUserRoleVO = {
     code?: number;
     msg?: string;
@@ -74,6 +92,10 @@ declare namespace API {
 
   type deleteRoleParams = {
     roleId: number;
+  };
+
+  type deleteUserInterfaceInfoParams = {
+    userInterfaceId: number;
   };
 
   type deleteUserParams = {
@@ -139,6 +161,7 @@ declare namespace API {
     responseBody?: string;
     status?: boolean;
     userAccount?: string;
+    totalCalls?: number;
     createTime?: string;
     updateTime?: string;
   };
@@ -184,6 +207,20 @@ declare namespace API {
     orders?: OrderItem[];
     optimizeCountSql?: PageRoleAssignmentVO;
     searchCount?: PageRoleAssignmentVO;
+    optimizeJoinOfCountSql?: boolean;
+    maxLimit?: number;
+    countId?: string;
+    pages?: number;
+  };
+
+  type PageUserInterfaceVO = {
+    records?: UserInterfaceVO[];
+    total?: number;
+    size?: number;
+    current?: number;
+    orders?: OrderItem[];
+    optimizeCountSql?: PageUserInterfaceVO;
+    searchCount?: PageUserInterfaceVO;
     optimizeJoinOfCountSql?: boolean;
     maxLimit?: number;
     countId?: string;
@@ -243,6 +280,43 @@ declare namespace API {
     password?: string;
     username?: string;
     userProfile?: string;
+  };
+
+  type UserInterfaceAddRequest = {
+    userId?: number;
+    interfaceId?: number;
+    remainCount?: number;
+    status?: number;
+  };
+
+  type UserInterfaceQueryRequest = {
+    currentPage?: number;
+    pageSize?: number;
+    sortField?: string;
+    sortOrder?: string;
+    userId?: number;
+    interfaceId?: number;
+    status?: number;
+  };
+
+  type UserInterfaceUpdateRequest = {
+    userId?: number;
+    interfaceId?: number;
+    totalCount?: number;
+    remainCount?: number;
+    status?: number;
+  };
+
+  type UserInterfaceVO = {
+    interfaceId?: number;
+    userId?: number;
+    name?: string;
+    description?: string;
+    url?: string;
+    method?: string;
+    totalCalls?: number;
+    totalCount?: number;
+    remainCount?: number;
   };
 
   type UserLoginRequest = {

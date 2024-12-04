@@ -15,6 +15,7 @@ import { Button, Drawer, message, Tag, Popconfirm, Image } from 'antd';
 import React, { useRef, useState } from 'react';
 import UpdateForm from './components/UpdateForm';
 import RoleAssignModal from './components/RoleAssignModal';
+import InterfaceAssignModal from './components/InterfaceAssignModal';
 import { addUser, deleteUser, getUserList, updateUser } from '@/services/forty-controller/userController';
 import { addRoleToUser } from '@/services/forty-controller/roleAssignmentController';
 
@@ -35,6 +36,7 @@ const UserManage: React.FC = () => {
    * */
   const [updateModalOpen, handleUpdateModalOpen] = useState<boolean>(false);
   const [roleAssignModalOpen, handleRoleAssignModalOpen] = useState<boolean>(false);
+  const [interfaceAssignModalOpen, handleInterfaceAssignModalOpen] = useState<boolean>(false);
   const [showDetail, setShowDetail] = useState<boolean>(false);
   const actionRef = useRef<ActionType>();
   const [currentRow, setCurrentRow] = useState<API.UserVO>();
@@ -43,12 +45,14 @@ const UserManage: React.FC = () => {
   const columns: ProColumns<API.UserVO>[] = [
 
     {
+      key: "id",
       title: 'id',
       dataIndex: 'id',
       hideInSearch: true,
       hideInTable: true,
     },
     {
+      key: 'userAvatar',
       title: '头像',
       dataIndex: 'userAvatar',
       align: "center",
@@ -69,6 +73,7 @@ const UserManage: React.FC = () => {
       }
     },
     {
+      key: 'userAccount',
       title: '用户账号',
       dataIndex: 'userAccount',
       align: "center",
@@ -86,12 +91,14 @@ const UserManage: React.FC = () => {
       },
     },
     {
+      key: 'userName',
       title: '昵称',
       dataIndex: 'userName',
       valueType: 'textarea',
       align: "center",
     },
     {
+      key: 'roles',
       title: '角色',
       dataIndex: 'roles',
       align: "center",
@@ -103,6 +110,7 @@ const UserManage: React.FC = () => {
       }
     },
     {
+      key: 'secretId',
       title: '密钥ID',
       dataIndex: 'secretId',
       align: "center",
@@ -111,26 +119,31 @@ const UserManage: React.FC = () => {
       hideInTable: true,
     },
     {
+      key: 'userProfile',
       title: '自我介绍',
       dataIndex: 'userProfile',
       align: "center",
       hideInSearch: true,
     },
     {
+      key: 'createTime',
       title: '创建时间',
       dataIndex: 'createTime',
       align: "center",
     },
     {
+      key: 'updateTime',
       title: '更新时间',
       dataIndex: 'updateTime',
       align: "center",
     },
     {
+      key: 'option',
       title: '操作',
       dataIndex: 'option',
       valueType: "option",
       align: "center",
+      fixed: "right",
       render: (_, record) => [
         (<a
           key="config"
@@ -151,11 +164,21 @@ const UserManage: React.FC = () => {
           角色授权
         </a>),
         (<a
+          key="interface-assign"
+          onClick={() => {
+            setCurrentRow(record)
+            handleInterfaceAssignModalOpen(true)
+          }}
+        >
+          接口授权
+        </a>),
+        (<a
           key="reset-password"
         >
           重置密码
         </a>),
         (<Popconfirm
+        key="delete-table"
           title="Delete the task"
           description="你确定要删除吗?"
           okText="Yes"
@@ -303,6 +326,14 @@ const UserManage: React.FC = () => {
           }
         }}
       ></RoleAssignModal>
+      <InterfaceAssignModal
+        modalOpen={interfaceAssignModalOpen}
+        onOpenChange={handleInterfaceAssignModalOpen}
+        values={currentRow || {}}
+        onSubmit={async () => {
+            handleInterfaceAssignModalOpen(false)
+        }}
+      ></InterfaceAssignModal>
       <UpdateForm
         onSubmit={async (value: any) => {
           const response = await updateUser(value)
