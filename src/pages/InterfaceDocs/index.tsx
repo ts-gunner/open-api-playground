@@ -77,7 +77,7 @@ export default function InterfaceDocs() {
             actions: {
               render: (text, row, index, action) => [
                 (<Link
-                  to={`/interface/detail/${row.id}`}
+                  to={`/interface/detail/${row.interfaceId}`}
                 >
                   查看详情
                 </Link>),

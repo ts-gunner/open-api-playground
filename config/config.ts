@@ -128,7 +128,7 @@ export default defineConfig({
   openAPI: [
     {
       requestLibPath: "import { request } from '@umijs/max'",
-      schemaPath: 'http://localhost:8443/v3/api-docs',
+      schemaPath: 'http://localhost:8443/controller/v3/api-docs',
       projectName: 'forty-controller',
     },
   ],

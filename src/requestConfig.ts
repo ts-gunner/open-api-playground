@@ -25,7 +25,7 @@ interface ResponseStructure {
  * @doc https://umijs.org/docs/max/request#配置
  */
 export const requestConfig: RequestConfig = {
-  baseURL: "http://localhost:8443",
+  baseURL: "http://localhost:8445/controller",  // API网关
   withCredentials: true,
   // 错误处理： umi@3 的错误处理方案。
   errorConfig: {

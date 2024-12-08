@@ -110,6 +110,7 @@ export default function index() {
                 boxShadow
             >
                 <ProDescriptions dataSource={interfaceData} column={1}>
+                <ProDescriptions.Item dataIndex="id" label="接口ID"></ProDescriptions.Item>
                     <ProDescriptions.Item dataIndex="method" label="请求方式"
                         render={(text) => {
                             return <Tag color={text === "GET" ? "#34c46d" : "#f47023"}>{text}</Tag>
