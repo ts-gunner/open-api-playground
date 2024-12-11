@@ -1,4 +1,3 @@
-
 export default [
   {
     path: '/user',
@@ -20,6 +19,7 @@ export default [
   },
   { name: 'API目录', icon: 'api', path: '/interface/docs', component: './InterfaceDocs' },
   { name: '用户中心', icon: 'user', path: '/user/center', component: './UserCenter' },
+  { name: '数据分析', icon: 'https://pic.imgdb.cn/item/6756bc39d0e0a243d4e0715a.png', path: '/interface/analysis', component: './InterfaceAnalysis' },
   { name: "查看接口文档", path: "/interface/detail/:interfaceId", component: "./InterfaceDetail", hideInMenu: true},
   { name: "在线调用接口", path: "/interface/online/:interfaceId", component: "./InterfaceOnline", hideInMenu: true},
   { path: '/', redirect: '/welcome' },

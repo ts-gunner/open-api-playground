@@ -56,7 +56,7 @@ export default function InterfaceDocs() {
               render: (_, record) => {
                 return (
                   <Space size={0}>
-                    <Tag color="blue">{record.url}</Tag>
+                    {/* <Tag color="blue">{record.url}</Tag> */}
                     <Tag color={record.method?.toLocaleUpperCase() === "GET" ? "#34c46d" : "#f47023"}>{record.method}</Tag>
                   </Space>
                 );

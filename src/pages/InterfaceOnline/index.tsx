@@ -52,12 +52,11 @@ export default function InterfaceOnline() {
     const callPublicAPI = async () => {
         setBtnLoading(true)
         const headers = headerFormRef.current?.getFieldsValue()["responseHeader"]
-        console.log("rawText",JSON.stringify(JSON.parse(rawText)))
         const response = await invokeInterface({
             interfaceId: params.interfaceId,
             bodyType,
             userRequestHeader: JSON.stringify(headers),
-            userRequestParams: bodyType === "Raw" ? JSON.stringify(JSON.parse(rawText)): 
+            userRequestParams: bodyType === "Raw" ? JSON.stringify(JSON.parse(rawText || "{}")): 
             JSON.stringify(switchToObject(bodyFormRef.current?.getFieldsValue()["requestBody"]))
         })
         setBtnLoading(false)

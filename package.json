@@ -48,6 +48,10 @@
   "dependencies": {
     "@ant-design/icons": "^4.8.1",
     "@ant-design/pro-components": "^2.6.48",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.13.5",
+    "@mui/material": "^6.1.10",
+    "@mui/x-charts": "^7.23.1",
     "@umijs/route-utils": "^2.2.2",
     "antd": "^5.13.2",
     "antd-style": "^3.6.1",
