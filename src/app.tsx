@@ -6,6 +6,7 @@ import { history, Link } from '@umijs/max';
 import defaultSettings from '../config/defaultSettings';
 import { requestConfig } from './requestConfig';
 import { getUserInfo } from './services/forty-controller/userController';
+import { message } from 'antd';
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
 
@@ -18,8 +19,14 @@ export async function getInitialState(): Promise<InitialState> {
     loading: false,
     settings: defaultSettings,
   };
+
   try {
     const response = await getUserInfo();
+    // if (response.code === 401001){
+    //   message.error(response.msg)
+    //   sessionStorage.removeItem("token")
+    //   history.push(loginPath)
+    // }
     state.loginUser = response.data;
   } catch (error) {
     history.push(loginPath);
